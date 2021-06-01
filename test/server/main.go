@@ -10,11 +10,12 @@ import (
 	"encoding/pem"
 	"fmt"
 	"github.com/PKURio/quic-go"
+	"github.com/PKURio/quic-go/node"
 	"github.com/PKURio/quic-go/storage"
 	"github.com/PKURio/quic-go/utils"
 	"io"
 	"math/big"
-	"net/http"
+	"net"
 	_ "net/http/pprof"
 	"strconv"
 )
@@ -32,7 +33,7 @@ var (
 	data [6][]byte
 )
 
-func serverStart() error {
+func server() error {
 	listener, err := quic.ListenAddr(addr, generateTLSConfig(), nil)
 	if err != nil {
 		return err
@@ -73,6 +74,13 @@ func serverStart() error {
 	}
 }
 
+// External interface to start server
+func serverStart(conn net.PacketConn) error {
+	node.Conn = conn
+	err := server()
+	return err
+}
+
 // Setup a bare-bones TLS config for the server
 func generateTLSConfig() *tls.Config {
 	key, err := rsa.GenerateKey(rand.Reader, 1024)
@@ -97,14 +105,12 @@ func generateTLSConfig() *tls.Config {
 	}
 }
 
+
 func main() {
+	node.Conn = &net.UDPConn{}
 	loadData()
 
-	go func() {
-		http.ListenAndServe("0.0.0.0:8080", nil)
-	}()
-
-	err := serverStart()
+	err := server()
 	if err != nil {
 		fmt.Println("err: ", err)
 	}

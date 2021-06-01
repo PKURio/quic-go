@@ -5,9 +5,11 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/PKURio/quic-go"
+	"github.com/PKURio/quic-go/node"
 	"github.com/PKURio/quic-go/storage"
 	"github.com/PKURio/quic-go/utils"
 	"io"
+	"net"
 )
 
 const (
@@ -80,9 +82,17 @@ func client() error {
 	}
 }
 
+// External interface to start client
+func clientStart(conn net.PacketConn) error {
+	node.Conn = conn
+	err := client()
+	return err
+}
+
 func main() {
 	//trace.Start(os.Stderr)
 	//defer trace.Stop()
+	node.Conn = &net.UDPConn{}
 
 	err := client()
 	if err != nil {

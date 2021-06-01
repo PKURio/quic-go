@@ -5,7 +5,9 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/PKURio/quic-go"
+	"github.com/PKURio/quic-go/node"
 	"io"
+	"net"
 	"time"
 )
 
@@ -52,6 +54,15 @@ func client() error {
 		time.Sleep(500 * time.Millisecond)
 	}
 }
+
+func clientStart(conn net.PacketConn) error {
+	node.Conn = conn
+
+
+
+	return nil
+}
+
 
 func main() {
 	err := client()
