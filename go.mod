@@ -6,7 +6,6 @@ require (
 	github.com/cheekybits/genny v1.0.0
 	github.com/francoispqt/gojay v1.2.13
 	github.com/golang/mock v1.5.0
-	github.com/lucas-clemente/quic-go v0.21.0 // indirect
 	github.com/marten-seemann/qpack v0.2.1
 	github.com/marten-seemann/qtls-go1-15 v0.1.4
 	github.com/marten-seemann/qtls-go1-16 v0.1.3
@@ -21,4 +20,3 @@ require (
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 )
 
-replace github.com/lucas-clemente/quic-go v0.21.0 => github.com/PKURio/quic-go v0.0.0-20210601093448-d0b53dfdbdb4
