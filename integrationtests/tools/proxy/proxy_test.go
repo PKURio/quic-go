@@ -71,7 +71,7 @@ var _ = Describe("QUIC Proxy", func() {
 			Expect(err).ToNot(HaveOccurred())
 			_, err = net.ListenUDP("udp", addr)
 			Expect(err).To(MatchError(fmt.Sprintf("listen udp 127.0.0.1:%d: bind: address already in use", proxy.LocalPort())))
-			Expect(proxy.Close()).To(Succeed()) // stopping is tested in the next test
+			Expect(proxy.Close()).To(Succeed()) // stopping is tested in the next main
 		})
 
 		It("stops the UDPProxy", func() {

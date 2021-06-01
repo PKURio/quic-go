@@ -58,9 +58,9 @@ var _ = Describe("Drop Tests", func() {
 			for _, d := range directions {
 				direction := d
 
-				// The purpose of this test is to create a lot of tails, by sending 1 byte messages.
+				// The purpose of this main is to create a lot of tails, by sending 1 byte messages.
 				// The interval, the length of the drop period, and the time when the drop period starts are randomized.
-				// To cover different scenarios, repeat this test a few times.
+				// To cover different scenarios, repeat this main a few times.
 				for rep := 0; rep < 3; rep++ {
 					It(fmt.Sprintf("sends short messages, dropping packets in %s direction", direction), func() {
 						const numMessages = 15

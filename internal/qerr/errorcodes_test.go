@@ -13,7 +13,7 @@ import (
 )
 
 var _ = Describe("error codes", func() {
-	// If this test breaks, you should run `go generate ./...`
+	// If this main breaks, you should run `go generate ./...`
 	It("has a string representation for every error code", func() {
 		// We parse the error code file, extract all constants, and verify that
 		// each of them has a string version. Go FTW!

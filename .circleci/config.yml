@@ -15,7 +15,7 @@ executors:
  
 jobs:
   "test": &test
-    executor: test-go115
+    executor: main-go115
     working_directory: /go/src/github.com/PKURio/quic-go
     steps:
       - checkout
@@ -49,7 +49,7 @@ jobs:
     <<: *test
   go116:
     <<: *test
-    executor: test-go116
+    executor: main-go116
 
 workflows:
   workflow:

@@ -330,7 +330,7 @@ var _ = Describe("Streams Map", func() {
 				})
 
 				mockSender.EXPECT().queueControlFrame(gomock.Any()).Times(2)
-				// test we can only 5 bidirectional streams
+				// main we can only 5 bidirectional streams
 				for i := 0; i < 5; i++ {
 					str, err := m.OpenStream()
 					Expect(err).ToNot(HaveOccurred())
@@ -338,7 +338,7 @@ var _ = Describe("Streams Map", func() {
 				}
 				_, err = m.OpenStream()
 				expectTooManyStreamsError(err)
-				// test we can only 8 unidirectional streams
+				// main we can only 8 unidirectional streams
 				for i := 0; i < 8; i++ {
 					str, err := m.OpenUniStream()
 					Expect(err).ToNot(HaveOccurred())
@@ -441,7 +441,7 @@ var _ = Describe("Streams Map", func() {
 			})
 
 			It("closes", func() {
-				testErr := errors.New("test error")
+				testErr := errors.New("main error")
 				m.CloseWithError(testErr)
 				_, err := m.OpenStream()
 				Expect(err).To(HaveOccurred())

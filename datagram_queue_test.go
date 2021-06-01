@@ -51,8 +51,8 @@ var _ = Describe("Datagram Queue", func() {
 			}()
 
 			Consistently(errChan).ShouldNot(Receive())
-			queue.CloseWithError(errors.New("test error"))
-			Eventually(errChan).Should(Receive(MatchError("test error")))
+			queue.CloseWithError(errors.New("main error"))
+			Eventually(errChan).Should(Receive(MatchError("main error")))
 		})
 	})
 
@@ -91,8 +91,8 @@ var _ = Describe("Datagram Queue", func() {
 			}()
 
 			Consistently(errChan).ShouldNot(Receive())
-			queue.CloseWithError(errors.New("test error"))
-			Eventually(errChan).Should(Receive(MatchError("test error")))
+			queue.CloseWithError(errors.New("main error"))
+			Eventually(errChan).Should(Receive(MatchError("main error")))
 		})
 	})
 })

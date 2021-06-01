@@ -6,7 +6,6 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	"github.com/PKURio/quic-go/log"
 	"github.com/PKURio/quic-go/node"
 	"net"
 	"runtime"
@@ -119,8 +118,6 @@ func (c *oobConn) ReadPacket() (*receivedPacket, error) {
 	}
 	ctrlMsgs, err := unix.ParseSocketControlMessage(c.oobBuffer[:oobn])
 
-	log.GetLogger().Println("ReadMsgUDP oobn", oobn)
-
 	if err != nil {
 		return nil, err
 	}
@@ -182,7 +179,6 @@ func (c *oobConn) ReadPacket() (*receivedPacket, error) {
 }
 
 func (c *oobConn) WritePacket(b []byte, addr net.Addr, oob []byte) (n int, err error) {
-	log.GetLogger().Println("WriteMsgUDP oob size", len(oob))
 	n, _, err = c.OOBCapablePacketConn.WriteMsgUDP(b, oob, addr.(*net.UDPAddr))
 	return n, err
 }

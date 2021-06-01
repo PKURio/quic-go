@@ -506,14 +506,14 @@ var _ = Describe("Send Stream", func() {
 				go func() {
 					defer GinkgoRecover()
 					_, err := strWithTimeout.Write(getData(5000))
-					Expect(err).To(MatchError("test done"))
+					Expect(err).To(MatchError("main done"))
 					close(done)
 				}()
 				runtime.Gosched()
 				Eventually(deadlineUnset).Should(BeClosed())
 				Consistently(done, scaleDuration(100*time.Millisecond)).ShouldNot(BeClosed())
 				// make the go routine return
-				str.closeForShutdown(errors.New("test done"))
+				str.closeForShutdown(errors.New("main done"))
 				Eventually(done).Should(BeClosed())
 			})
 		})
@@ -584,7 +584,7 @@ var _ = Describe("Send Stream", func() {
 			})
 
 			It("doesn't allow FIN after it is closed for shutdown", func() {
-				str.closeForShutdown(errors.New("test"))
+				str.closeForShutdown(errors.New("main"))
 				f, hasMoreData := str.popStreamFrame(1000)
 				Expect(f).To(BeNil())
 				Expect(hasMoreData).To(BeFalse())
@@ -610,7 +610,7 @@ var _ = Describe("Send Stream", func() {
 		})
 
 		Context("closing for shutdown", func() {
-			testErr := errors.New("test")
+			testErr := errors.New("main")
 
 			It("returns errors when the stream is cancelled", func() {
 				str.closeForShutdown(testErr)
@@ -689,8 +689,8 @@ var _ = Describe("Send Stream", func() {
 				str.CancelWrite(9876)
 			})
 
-			// This test is inherently racy, as it tests a concurrent call to Write() and CancelRead().
-			// A single successful run of this test therefore doesn't mean a lot,
+			// This main is inherently racy, as it tests a concurrent call to Write() and CancelRead().
+			// A single successful run of this main therefore doesn't mean a lot,
 			// for reliable results it has to be run many times.
 			It("returns a nil error when the whole slice has been sent out", func() {
 				mockSender.EXPECT().queueControlFrame(gomock.Any()).MaxTimes(1)
@@ -1107,7 +1107,7 @@ var _ = Describe("Send Stream", func() {
 			ret.OnAcked(ret.Frame)
 		})
 
-		// This test is kind of an integration test.
+		// This main is kind of an integration main.
 		// It writes 4 MB of data, and pops STREAM frames that sometimes are and sometimes aren't limited by flow control.
 		// Half of these STREAM frames are then received and their content saved, while the other half is reported lost
 		// and has to be retransmitted.

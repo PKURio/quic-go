@@ -70,7 +70,7 @@ func main() {
 	case "http3":
 		err = runHTTP3Server(quicConf)
 	default:
-		fmt.Printf("unsupported test case: %s\n", testcase)
+		fmt.Printf("unsupported main case: %s\n", testcase)
 		os.Exit(127)
 	}
 

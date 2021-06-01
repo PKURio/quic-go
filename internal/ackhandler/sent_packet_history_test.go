@@ -158,7 +158,7 @@ var _ = Describe("SentPacketHistory", func() {
 		})
 
 		It("returns the error", func() {
-			testErr := errors.New("test error")
+			testErr := errors.New("main error")
 			var iterations []protocol.PacketNumber
 			Expect(hist.Iterate(func(p *Packet) (bool, error) {
 				if p.skippedPacket {

@@ -21,7 +21,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("MITM test", func() {
+var _ = Describe("MITM main", func() {
 	for _, v := range protocol.SupportedVersions {
 		version := v
 

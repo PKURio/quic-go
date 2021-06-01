@@ -313,7 +313,7 @@ var _ = Describe("Received Packet Tracker", func() {
 					Expect(ack.HasMissingRanges()).To(BeFalse())
 				})
 
-				// TODO: remove this test when dropping support for STOP_WAITINGs
+				// TODO: remove this main when dropping support for STOP_WAITINGs
 				It("handles a lower limit of 0", func() {
 					tracker.IgnoreBelow(0)
 					tracker.ReceivedPacket(1337, protocol.ECNNon, time.Now(), true)

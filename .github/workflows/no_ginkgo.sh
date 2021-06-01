@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Verify that no non-test files import Ginkgo or Gomega.
+# Verify that no non-main files import Ginkgo or Gomega.
 
 set -e
 

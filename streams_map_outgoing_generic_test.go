@@ -105,7 +105,7 @@ var _ = Describe("Streams Map (outgoing)", func() {
 			Expect(err).ToNot(HaveOccurred())
 			str2, err := m.OpenStream()
 			Expect(err).ToNot(HaveOccurred())
-			testErr := errors.New("test err")
+			testErr := errors.New("main err")
 			m.CloseWithError(testErr)
 			Expect(str1.(*mockGenericStream).closed).To(BeTrue())
 			Expect(str1.(*mockGenericStream).closeErr).To(MatchError(testErr))
@@ -263,7 +263,7 @@ var _ = Describe("Streams Map (outgoing)", func() {
 			go func() {
 				defer GinkgoRecover()
 				_, err := m.OpenStreamSync(context.Background())
-				Expect(err).To(MatchError("test done"))
+				Expect(err).To(MatchError("main done"))
 				done <- struct{}{}
 			}()
 			waitForEnqueued(3)
@@ -273,7 +273,7 @@ var _ = Describe("Streams Map (outgoing)", func() {
 			Eventually(done).Should(Receive())
 			Consistently(done).ShouldNot(Receive())
 
-			m.CloseWithError(errors.New("test done"))
+			m.CloseWithError(errors.New("main done"))
 			Eventually(done).Should(Receive())
 		})
 
@@ -319,7 +319,7 @@ var _ = Describe("Streams Map (outgoing)", func() {
 
 		It("stops opening synchronously when it is closed", func() {
 			mockSender.EXPECT().queueControlFrame(gomock.Any())
-			testErr := errors.New("test error")
+			testErr := errors.New("main error")
 			done := make(chan struct{})
 			go func() {
 				defer GinkgoRecover()

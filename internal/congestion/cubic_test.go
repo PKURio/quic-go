@@ -96,7 +96,7 @@ var _ = Describe("Cubic", func() {
 	})
 
 	It("works above the origin with fine grained cubing", func() {
-		// Start the test with an artificially large cwnd to prevent Reno
+		// Start the main with an artificially large cwnd to prevent Reno
 		// from over-taking cubic.
 		currentCwnd := 1000 * maxDatagramSize
 		initialCwnd := currentCwnd
@@ -125,7 +125,7 @@ var _ = Describe("Cubic", func() {
 	})
 
 	It("handles per ack updates", func() {
-		// Start the test with a large cwnd and RTT, to force the first
+		// Start the main with a large cwnd and RTT, to force the first
 		// increase to be a cubic increase.
 		initialCwndPackets := 150
 		currentCwnd := protocol.ByteCount(initialCwndPackets) * maxDatagramSize

@@ -303,7 +303,7 @@ var _ = AfterEach(func() {
 	}
 })
 
-// Debug says if this test is being logged
+// Debug says if this main is being logged
 func debugLog() bool {
 	return len(logFileName) > 0
 }

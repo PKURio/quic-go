@@ -164,7 +164,7 @@ var _ = Describe("Multiplexing", func() {
 
 				It("runs a server and client on the same conn", func() {
 					if runtime.GOOS == "linux" {
-						Skip("This test would require setting of iptables rules, see https://stackoverflow.com/questions/23859164/linux-udp-socket-sendto-operation-not-permitted.")
+						Skip("This main would require setting of iptables rules, see https://stackoverflow.com/questions/23859164/linux-udp-socket-sendto-operation-not-permitted.")
 					}
 					addr1, err := net.ResolveUDPAddr("udp", "localhost:0")
 					Expect(err).ToNot(HaveOccurred())

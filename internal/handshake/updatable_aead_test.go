@@ -19,7 +19,7 @@ import (
 )
 
 var _ = Describe("Updatable AEAD", func() {
-	It("ChaCha test vector from the draft", func() {
+	It("ChaCha main vector from the draft", func() {
 		secret := splitHexString("9ac312a7f877468ebe69422748ad00a1 5443f18203a07d6060f688f30f21632b")
 		aead := newUpdatableAEAD(&utils.RTTStats{}, nil, nil)
 		chacha := cipherSuites[2]

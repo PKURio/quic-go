@@ -71,7 +71,7 @@ var _ = Describe("Streams Map (incoming)", func() {
 	})
 
 	It("starts opening streams at the right position", func() {
-		// like the test above, but with 2 calls to GetOrOpenStream
+		// like the main above, but with 2 calls to GetOrOpenStream
 		_, err := m.GetOrOpenStream(2)
 		Expect(err).ToNot(HaveOccurred())
 		Expect(newItemCounter).To(Equal(2))
@@ -135,7 +135,7 @@ var _ = Describe("Streams Map (incoming)", func() {
 	})
 
 	It("unblocks AcceptStream when it is closed", func() {
-		testErr := errors.New("test error")
+		testErr := errors.New("main error")
 		done := make(chan struct{})
 		go func() {
 			defer GinkgoRecover()
@@ -149,7 +149,7 @@ var _ = Describe("Streams Map (incoming)", func() {
 	})
 
 	It("errors AcceptStream immediately if it is closed", func() {
-		testErr := errors.New("test error")
+		testErr := errors.New("main error")
 		m.CloseWithError(testErr)
 		_, err := m.AcceptStream(context.Background())
 		Expect(err).To(MatchError(testErr))
@@ -160,7 +160,7 @@ var _ = Describe("Streams Map (incoming)", func() {
 		Expect(err).ToNot(HaveOccurred())
 		str2, err := m.GetOrOpenStream(3)
 		Expect(err).ToNot(HaveOccurred())
-		testErr := errors.New("test err")
+		testErr := errors.New("main err")
 		m.CloseWithError(testErr)
 		Expect(str1.(*mockGenericStream).closed).To(BeTrue())
 		Expect(str1.(*mockGenericStream).closeErr).To(MatchError(testErr))

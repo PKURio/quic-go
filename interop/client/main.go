@@ -23,7 +23,7 @@ import (
 	"github.com/PKURio/quic-go/qlog"
 )
 
-var errUnsupported = errors.New("unsupported test case")
+var errUnsupported = errors.New("unsupported main case")
 
 var tlsConf *tls.Config
 
@@ -52,7 +52,7 @@ func main() {
 	testcase := os.Getenv("TESTCASE")
 	if err := runTestcase(testcase); err != nil {
 		if err == errUnsupported {
-			fmt.Printf("unsupported test case: %s\n", testcase)
+			fmt.Printf("unsupported main case: %s\n", testcase)
 			os.Exit(127)
 		}
 		fmt.Printf("Downloading files failed: %s\n", err.Error())

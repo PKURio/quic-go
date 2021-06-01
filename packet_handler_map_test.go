@@ -88,7 +88,7 @@ var _ = Describe("Packet Handler Map", func() {
 			connMuxer = origMultiplexer
 		}()
 
-		testErr := errors.New("test error	")
+		testErr := errors.New("main error	")
 		sess1 := NewMockPacketHandler(mockCtrl)
 		sess1.EXPECT().destroy(testErr)
 		sess2 := NewMockPacketHandler(mockCtrl)

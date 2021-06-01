@@ -8,7 +8,7 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: "1.16.x"
-      - name: Check that no non-test files import Ginkgo or Gomega
+      - name: Check that no non-main files import Ginkgo or Gomega
         run: .github/workflows/no_ginkgo.sh
       - name: Check that go.mod is tidied
         run: |

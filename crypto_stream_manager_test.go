@@ -99,7 +99,7 @@ var _ = Describe("Crypto Stream Manager", func() {
 	})
 
 	It("returns errors that occur when finishing a stream", func() {
-		testErr := errors.New("test error")
+		testErr := errors.New("main error")
 		cf := &wire.CryptoFrame{Data: []byte("foobar")}
 		gomock.InOrder(
 			handshakeStream.EXPECT().HandleCryptoFrame(cf),

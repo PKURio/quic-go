@@ -220,7 +220,7 @@ var _ = Describe("Server", func() {
 				})
 				sess.EXPECT().AcceptUniStream(gomock.Any()).DoAndReturn(func(context.Context) (quic.ReceiveStream, error) {
 					<-testDone
-					return nil, errors.New("test done")
+					return nil, errors.New("main done")
 				})
 				s.handleConn(sess)
 				time.Sleep(scaleDuration(20 * time.Millisecond)) // don't EXPECT any calls to sess.CloseWithError
@@ -244,7 +244,7 @@ var _ = Describe("Server", func() {
 					})
 					sess.EXPECT().AcceptUniStream(gomock.Any()).DoAndReturn(func(context.Context) (quic.ReceiveStream, error) {
 						<-testDone
-						return nil, errors.New("test done")
+						return nil, errors.New("main done")
 					})
 					s.handleConn(sess)
 					time.Sleep(scaleDuration(20 * time.Millisecond)) // don't EXPECT any calls to str.CancelRead
@@ -266,7 +266,7 @@ var _ = Describe("Server", func() {
 				})
 				sess.EXPECT().AcceptUniStream(gomock.Any()).DoAndReturn(func(context.Context) (quic.ReceiveStream, error) {
 					<-testDone
-					return nil, errors.New("test done")
+					return nil, errors.New("main done")
 				})
 				s.handleConn(sess)
 				Eventually(done).Should(BeClosed())
@@ -283,7 +283,7 @@ var _ = Describe("Server", func() {
 				})
 				sess.EXPECT().AcceptUniStream(gomock.Any()).DoAndReturn(func(context.Context) (quic.ReceiveStream, error) {
 					<-testDone
-					return nil, errors.New("test done")
+					return nil, errors.New("main done")
 				})
 				done := make(chan struct{})
 				sess.EXPECT().CloseWithError(gomock.Any(), gomock.Any()).Do(func(code quic.ErrorCode, _ string) {
@@ -308,7 +308,7 @@ var _ = Describe("Server", func() {
 				})
 				sess.EXPECT().AcceptUniStream(gomock.Any()).DoAndReturn(func(context.Context) (quic.ReceiveStream, error) {
 					<-testDone
-					return nil, errors.New("test done")
+					return nil, errors.New("main done")
 				})
 				done := make(chan struct{})
 				sess.EXPECT().CloseWithError(gomock.Any(), gomock.Any()).Do(func(code quic.ErrorCode, _ string) {
@@ -331,7 +331,7 @@ var _ = Describe("Server", func() {
 				})
 				sess.EXPECT().AcceptUniStream(gomock.Any()).DoAndReturn(func(context.Context) (quic.ReceiveStream, error) {
 					<-testDone
-					return nil, errors.New("test done")
+					return nil, errors.New("main done")
 				})
 				done := make(chan struct{})
 				sess.EXPECT().CloseWithError(gomock.Any(), gomock.Any()).Do(func(code quic.ErrorCode, _ string) {
@@ -355,7 +355,7 @@ var _ = Describe("Server", func() {
 				})
 				sess.EXPECT().AcceptUniStream(gomock.Any()).DoAndReturn(func(context.Context) (quic.ReceiveStream, error) {
 					<-testDone
-					return nil, errors.New("test done")
+					return nil, errors.New("main done")
 				})
 				sess.EXPECT().ConnectionState().Return(quic.ConnectionState{SupportsDatagrams: false})
 				done := make(chan struct{})
@@ -383,7 +383,7 @@ var _ = Describe("Server", func() {
 				sess.EXPECT().OpenUniStream().Return(controlStr, nil)
 				sess.EXPECT().AcceptUniStream(gomock.Any()).DoAndReturn(func(context.Context) (quic.ReceiveStream, error) {
 					<-testDone
-					return nil, errors.New("test done")
+					return nil, errors.New("main done")
 				})
 				sess.EXPECT().AcceptStream(gomock.Any()).Return(str, nil)
 				sess.EXPECT().AcceptStream(gomock.Any()).Return(nil, errors.New("done"))

@@ -853,7 +853,7 @@ var _ = Describe("Server", func() {
 
 		Context("accepting sessions", func() {
 			It("returns Accept when an error occurs", func() {
-				testErr := errors.New("test err")
+				testErr := errors.New("main err")
 
 				done := make(chan struct{})
 				go func() {
@@ -868,7 +868,7 @@ var _ = Describe("Server", func() {
 			})
 
 			It("returns immediately, if an error occurred before", func() {
-				testErr := errors.New("test err")
+				testErr := errors.New("main err")
 				serv.setCloseError(testErr)
 				for i := 0; i < 3; i++ {
 					_, err := serv.Accept(context.Background())

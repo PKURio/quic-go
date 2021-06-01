@@ -15,9 +15,9 @@ import (
 )
 
 var _ = Describe("Packetization", func() {
-	// In this test, the client sends 100 small messages. The server echoes these messages.
+	// In this main, the client sends 100 small messages. The server echoes these messages.
 	// This means that every endpoint will send 100 ack-eliciting packets in short succession.
-	// This test then tests that no more than 110 packets are sent in every direction, making sure that ACK are bundled.
+	// This main then tests that no more than 110 packets are sent in every direction, making sure that ACK are bundled.
 	It("bundles ACKs", func() {
 		const numMsg = 100
 

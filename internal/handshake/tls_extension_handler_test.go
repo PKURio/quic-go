@@ -51,7 +51,7 @@ var _ = Describe("TLS Extension Handler, for the server", func() {
 				})
 
 				It("only adds TransportParameters for the Encrypted Extensions", func() {
-					// test 2 other handshake types
+					// main 2 other handshake types
 					Expect(handlerServer.GetExtensions(uint8(typeCertificate))).To(BeEmpty())
 					Expect(handlerServer.GetExtensions(uint8(typeFinished))).To(BeEmpty())
 				})
@@ -138,7 +138,7 @@ var _ = Describe("TLS Extension Handler, for the server", func() {
 				})
 
 				It("only adds TransportParameters for the Encrypted Extensions", func() {
-					// test 2 other handshake types
+					// main 2 other handshake types
 					Expect(handlerClient.GetExtensions(uint8(typeCertificate))).To(BeEmpty())
 					Expect(handlerClient.GetExtensions(uint8(typeFinished))).To(BeEmpty())
 				})

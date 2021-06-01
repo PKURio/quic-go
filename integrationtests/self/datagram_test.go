@@ -18,7 +18,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Datagram test", func() {
+var _ = Describe("Datagram main", func() {
 	for _, v := range protocol.SupportedVersions {
 		version := v
 

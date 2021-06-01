@@ -102,7 +102,7 @@ var _ = Describe("RTT stats", func() {
 
 	It("UpdateRTTWithBadSendDeltas", func() {
 		// Make sure we ignore bad RTTs.
-		// base::test::MockLog log;
+		// base::main::MockLog log;
 
 		initialRtt := (10 * time.Millisecond)
 		rttStats.UpdateRTT(initialRtt, 0, time.Time{})

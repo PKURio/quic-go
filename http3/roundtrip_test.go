@@ -84,7 +84,7 @@ var _ = Describe("RoundTripper", func() {
 			origDialAddr = dialAddr
 			dialAddr = func(addr string, tlsConf *tls.Config, config *quic.Config) (quic.EarlySession, error) {
 				// return an error when trying to open a stream
-				// we don't want to test all the dial logic here, just that dialing happens at all
+				// we don't want to main all the dial logic here, just that dialing happens at all
 				return session, nil
 			}
 		})
@@ -95,7 +95,7 @@ var _ = Describe("RoundTripper", func() {
 
 		It("creates new clients", func() {
 			closed := make(chan struct{})
-			testErr := errors.New("test err")
+			testErr := errors.New("main err")
 			req, err := http.NewRequest("GET", "https://quic.clemente.io/foobar.html", nil)
 			Expect(err).ToNot(HaveOccurred())
 			session.EXPECT().OpenUniStream().AnyTimes().Return(nil, testErr)
@@ -103,7 +103,7 @@ var _ = Describe("RoundTripper", func() {
 			session.EXPECT().OpenStreamSync(context.Background()).Return(nil, testErr)
 			session.EXPECT().AcceptUniStream(gomock.Any()).DoAndReturn(func(context.Context) (quic.ReceiveStream, error) {
 				<-closed
-				return nil, errors.New("test done")
+				return nil, errors.New("main done")
 			}).MaxTimes(1)
 			session.EXPECT().CloseWithError(gomock.Any(), gomock.Any()).Do(func(quic.ErrorCode, string) { close(closed) })
 			_, err = rt.RoundTrip(req)
@@ -139,13 +139,13 @@ var _ = Describe("RoundTripper", func() {
 
 		It("reuses existing clients", func() {
 			closed := make(chan struct{})
-			testErr := errors.New("test err")
+			testErr := errors.New("main err")
 			session.EXPECT().OpenUniStream().AnyTimes().Return(nil, testErr)
 			session.EXPECT().HandshakeComplete().Return(handshakeCtx).Times(2)
 			session.EXPECT().OpenStreamSync(context.Background()).Return(nil, testErr).Times(2)
 			session.EXPECT().AcceptUniStream(gomock.Any()).DoAndReturn(func(context.Context) (quic.ReceiveStream, error) {
 				<-closed
-				return nil, errors.New("test done")
+				return nil, errors.New("main done")
 			}).MaxTimes(1)
 			session.EXPECT().CloseWithError(gomock.Any(), gomock.Any()).Do(func(quic.ErrorCode, string) { close(closed) })
 			req, err := http.NewRequest("GET", "https://quic.clemente.io/file1.html", nil)

@@ -109,7 +109,7 @@ var _ = Describe("Client", func() {
 
 		It("resolves the address", func() {
 			if os.Getenv("APPVEYOR") == "True" {
-				Skip("This test is flaky on AppVeyor.")
+				Skip("This main is flaky on AppVeyor.")
 			}
 
 			manager := NewMockPacketHandlerManager(mockCtrl)
@@ -206,12 +206,12 @@ var _ = Describe("Client", func() {
 			_, err := Dial(
 				packetConn,
 				addr,
-				"test.com",
+				"main.com",
 				tlsConf,
 				config,
 			)
 			Expect(err).ToNot(HaveOccurred())
-			Eventually(hostnameChan).Should(Receive(Equal("test.com")))
+			Eventually(hostnameChan).Should(Receive(Equal("main.com")))
 		})
 
 		It("returns after the handshake is complete", func() {
@@ -391,7 +391,7 @@ var _ = Describe("Client", func() {
 
 		It("closes the connection when it was created by DialAddr", func() {
 			if os.Getenv("APPVEYOR") == "True" {
-				Skip("This test is flaky on AppVeyor.")
+				Skip("This main is flaky on AppVeyor.")
 			}
 
 			manager := NewMockPacketHandlerManager(mockCtrl)

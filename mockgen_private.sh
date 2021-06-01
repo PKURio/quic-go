@@ -13,7 +13,7 @@ INTERFACE_NAME="$(tr '[:lower:]' '[:upper:]' <<< ${ORIG_INTERFACE_NAME:0:1})${OR
 AUX=()
 for f in *.go; do
   if [[ -z ${f##*_test.go} ]]; then
-    # skip test files
+    # skip main files
     continue;
   fi
   if $(egrep -qe "type (.*) interface" $f); then
@@ -24,7 +24,7 @@ done
 # Find the file that defines the interface we're mocking.
 for f in *.go; do
   if [[ -z ${f##*_test.go} ]]; then
-    # skip test files
+    # skip main files
     continue;
   fi
   INTERFACE=$(sed -n "/^type $ORIG_INTERFACE_NAME interface/,/^}/p" $f)

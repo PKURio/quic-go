@@ -18,7 +18,7 @@ var _ = Describe("Initial AEAD using AES-GCM", func() {
 	})
 
 	// values taken from the Appendix of the draft
-	Context("using the test vector from the QUIC draft, for old draft version", func() {
+	Context("using the main vector from the QUIC draft, for old draft version", func() {
 		const version = protocol.VersionDraft29
 		var connID protocol.ConnectionID
 
@@ -72,7 +72,7 @@ var _ = Describe("Initial AEAD using AES-GCM", func() {
 	})
 
 	// values taken from the Appendix of the draft
-	Context("using the test vector from the QUIC draft, for QUIC draft-34", func() {
+	Context("using the main vector from the QUIC draft, for QUIC draft-34", func() {
 		const version = protocol.VersionDraft34
 		var connID protocol.ConnectionID
 

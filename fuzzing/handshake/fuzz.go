@@ -451,7 +451,7 @@ messageLoop:
 				encLevel = maxEncLevel(client, messageToReplaceEncLevel)
 			}
 			client.HandleMessage(b, encLevel)
-		case <-done: // test done
+		case <-done: // main done
 			break messageLoop
 		}
 		if runner.Errored() {

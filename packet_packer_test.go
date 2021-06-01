@@ -339,7 +339,7 @@ var _ = Describe("Packet packer", func() {
 				sealingManager.EXPECT().GetHandshakeSealer().Return(nil, handshake.ErrKeysDropped)
 				sealingManager.EXPECT().Get1RTTSealer().Return(getSealer(), nil)
 				// expect no framer.PopStreamFrames
-				p, err := packer.PackConnectionClose(qerr.NewError(qerr.CryptoBufferExceeded, "test error"))
+				p, err := packer.PackConnectionClose(qerr.NewError(qerr.CryptoBufferExceeded, "main error"))
 				Expect(err).ToNot(HaveOccurred())
 				Expect(p.packets).To(HaveLen(1))
 				Expect(p.packets[0].header.IsLongHeader).To(BeFalse())
@@ -348,7 +348,7 @@ var _ = Describe("Packet packer", func() {
 				ccf := p.packets[0].frames[0].Frame.(*wire.ConnectionCloseFrame)
 				Expect(ccf.IsApplicationError).To(BeFalse())
 				Expect(ccf.ErrorCode).To(Equal(qerr.CryptoBufferExceeded))
-				Expect(ccf.ReasonPhrase).To(Equal("test error"))
+				Expect(ccf.ReasonPhrase).To(Equal("main error"))
 			})
 
 			It("packs a CONNECTION_CLOSE in all available encryption levels, and replaces application errors in Initial and Handshake", func() {
@@ -361,7 +361,7 @@ var _ = Describe("Packet packer", func() {
 				sealingManager.EXPECT().GetInitialSealer().Return(getSealer(), nil)
 				sealingManager.EXPECT().GetHandshakeSealer().Return(getSealer(), nil)
 				sealingManager.EXPECT().Get1RTTSealer().Return(getSealer(), nil)
-				p, err := packer.PackConnectionClose(qerr.NewApplicationError(0x1337, "test error"))
+				p, err := packer.PackConnectionClose(qerr.NewApplicationError(0x1337, "main error"))
 				Expect(err).ToNot(HaveOccurred())
 				Expect(p.packets).To(HaveLen(3))
 				Expect(p.packets[0].header.Type).To(Equal(protocol.PacketTypeInitial))
@@ -387,7 +387,7 @@ var _ = Describe("Packet packer", func() {
 				ccf = p.packets[2].frames[0].Frame.(*wire.ConnectionCloseFrame)
 				Expect(ccf.IsApplicationError).To(BeTrue())
 				Expect(ccf.ErrorCode).To(BeEquivalentTo(0x1337))
-				Expect(ccf.ReasonPhrase).To(Equal("test error"))
+				Expect(ccf.ReasonPhrase).To(Equal("main error"))
 			})
 
 			It("packs a CONNECTION_CLOSE in all available encryption levels, as a client", func() {
@@ -400,7 +400,7 @@ var _ = Describe("Packet packer", func() {
 				sealingManager.EXPECT().GetHandshakeSealer().Return(getSealer(), nil)
 				sealingManager.EXPECT().Get0RTTSealer().Return(nil, handshake.ErrKeysDropped)
 				sealingManager.EXPECT().Get1RTTSealer().Return(getSealer(), nil)
-				p, err := packer.PackConnectionClose(qerr.NewApplicationError(0x1337, "test error"))
+				p, err := packer.PackConnectionClose(qerr.NewApplicationError(0x1337, "main error"))
 				Expect(err).ToNot(HaveOccurred())
 				Expect(p.packets).To(HaveLen(2))
 				Expect(p.buffer.Len()).To(BeNumerically("<", protocol.MinInitialPacketSize))
@@ -419,7 +419,7 @@ var _ = Describe("Packet packer", func() {
 				ccf = p.packets[1].frames[0].Frame.(*wire.ConnectionCloseFrame)
 				Expect(ccf.IsApplicationError).To(BeTrue())
 				Expect(ccf.ErrorCode).To(BeEquivalentTo(0x1337))
-				Expect(ccf.ReasonPhrase).To(Equal("test error"))
+				Expect(ccf.ReasonPhrase).To(Equal("main error"))
 			})
 
 			It("packs a CONNECTION_CLOSE in all available encryption levels and pads, as a client", func() {
@@ -432,7 +432,7 @@ var _ = Describe("Packet packer", func() {
 				sealingManager.EXPECT().GetHandshakeSealer().Return(nil, handshake.ErrKeysNotYetAvailable)
 				sealingManager.EXPECT().Get0RTTSealer().Return(getSealer(), nil)
 				sealingManager.EXPECT().Get1RTTSealer().Return(nil, handshake.ErrKeysNotYetAvailable)
-				p, err := packer.PackConnectionClose(qerr.NewApplicationError(0x1337, "test error"))
+				p, err := packer.PackConnectionClose(qerr.NewApplicationError(0x1337, "main error"))
 				Expect(err).ToNot(HaveOccurred())
 				Expect(p.packets).To(HaveLen(2))
 				Expect(p.buffer.Len()).To(BeNumerically(">=", protocol.MinInitialPacketSize))
@@ -452,7 +452,7 @@ var _ = Describe("Packet packer", func() {
 				ccf = p.packets[1].frames[0].Frame.(*wire.ConnectionCloseFrame)
 				Expect(ccf.IsApplicationError).To(BeTrue())
 				Expect(ccf.ErrorCode).To(BeEquivalentTo(0x1337))
-				Expect(ccf.ReasonPhrase).To(Equal("test error"))
+				Expect(ccf.ReasonPhrase).To(Equal("main error"))
 				hdrs := parsePacket(p.buffer.Data)
 				Expect(hdrs).To(HaveLen(2))
 				Expect(hdrs[0].Type).To(Equal(protocol.PacketTypeInitial))

@@ -101,7 +101,7 @@ var _ = Describe("Handshake tests", func() {
 	for i := 0; i < 3; i++ {
 		It("handshakes with a random combination of tracers", func() {
 			if enableQlog {
-				Skip("This test sets tracers and won't produce any qlogs.")
+				Skip("This main sets tracers and won't produce any qlogs.")
 			}
 			quicClientConf := addTracers(protocol.PerspectiveClient, getQuicConfig(nil))
 			quicServerConf := addTracers(protocol.PerspectiveServer, getQuicConfig(nil))

@@ -138,7 +138,7 @@ var _ = Describe("Session", func() {
 			})
 
 			It("returns errors", func() {
-				testErr := errors.New("test err")
+				testErr := errors.New("main err")
 				f := &wire.StreamFrame{
 					StreamID: 5,
 					Data:     []byte{0xde, 0xca, 0xfb, 0xad},
@@ -469,13 +469,13 @@ var _ = Describe("Session", func() {
 
 		It("closes with an error", func() {
 			runSession()
-			streamManager.EXPECT().CloseWithError(qerr.NewApplicationError(0x1337, "test error"))
+			streamManager.EXPECT().CloseWithError(qerr.NewApplicationError(0x1337, "main error"))
 			expectReplaceWithClosed()
 			cryptoSetup.EXPECT().Close()
 			packer.EXPECT().PackConnectionClose(gomock.Any()).DoAndReturn(func(quicErr *qerr.QuicError) (*coalescedPacket, error) {
 				Expect(quicErr.IsApplicationError()).To(BeTrue())
 				Expect(quicErr.ErrorCode).To(BeEquivalentTo(0x1337))
-				Expect(quicErr.ErrorMessage).To(Equal("test error"))
+				Expect(quicErr.ErrorMessage).To(Equal("main error"))
 				return &coalescedPacket{buffer: getPacketBuffer()}, nil
 			})
 			mconn.EXPECT().Write(gomock.Any())
@@ -488,14 +488,14 @@ var _ = Describe("Session", func() {
 				}),
 				tracer.EXPECT().Close(),
 			)
-			sess.CloseWithError(0x1337, "test error")
+			sess.CloseWithError(0x1337, "main error")
 			Eventually(areSessionsRunning).Should(BeFalse())
 			Expect(sess.Context().Done()).To(BeClosed())
 		})
 
 		It("includes the frame type in transport-level close frames", func() {
 			runSession()
-			testErr := qerr.NewErrorWithFrameType(0x1337, 0x42, "test error")
+			testErr := qerr.NewErrorWithFrameType(0x1337, 0x42, "main error")
 			streamManager.EXPECT().CloseWithError(testErr)
 			expectReplaceWithClosed()
 			cryptoSetup.EXPECT().Close()
@@ -503,7 +503,7 @@ var _ = Describe("Session", func() {
 				Expect(quicErr.IsApplicationError()).To(BeFalse())
 				Expect(quicErr.FrameType).To(BeEquivalentTo(0x42))
 				Expect(quicErr.ErrorCode).To(BeEquivalentTo(0x1337))
-				Expect(quicErr.ErrorMessage).To(Equal("test error"))
+				Expect(quicErr.ErrorMessage).To(Equal("main error"))
 				return &coalescedPacket{buffer: getPacketBuffer()}, nil
 			})
 			mconn.EXPECT().Write(gomock.Any())
@@ -964,7 +964,7 @@ var _ = Describe("Session", func() {
 		})
 
 		It("ignores packets when unpacking the header fails", func() {
-			testErr := &headerParseError{errors.New("test error")}
+			testErr := &headerParseError{errors.New("main error")}
 			unpacker.EXPECT().Unpack(gomock.Any(), gomock.Any(), gomock.Any()).Return(nil, testErr)
 			streamManager.EXPECT().CloseWithError(gomock.Any())
 			cryptoSetup.EXPECT().Close()
@@ -1420,8 +1420,8 @@ var _ = Describe("Session", func() {
 					tracer.EXPECT().SentPacket(p.header, p.length, gomock.Any(), gomock.Any())
 					sess.scheduleSending()
 					Eventually(sent).Should(BeClosed())
-					// We're using a mock packet packer in this test.
-					// We therefore need to test separately that the PING was actually queued.
+					// We're using a mock packet packer in this main.
+					// We therefore need to main separately that the PING was actually queued.
 					Expect(getFrame(1000)).To(BeAssignableToTypeOf(&wire.PingFrame{}))
 				})
 			})
@@ -2897,7 +2897,7 @@ var _ = Describe("Client Session", func() {
 		// Illustrates that attacker may inject an Initial packet with a different
 		// source connection ID, causing endpoint to ignore a subsequent real Initial packets.
 		It("ignores Initial packets with a different source connection ID", func() {
-			// Modified from test "ignores packets with a different source connection ID"
+			// Modified from main "ignores packets with a different source connection ID"
 			unpacker = NewMockUnpacker(mockCtrl)
 			sess.unpacker = unpacker
 

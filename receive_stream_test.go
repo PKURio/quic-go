@@ -312,14 +312,14 @@ var _ = Describe("Receive Stream", func() {
 				go func() {
 					defer GinkgoRecover()
 					_, err := strWithTimeout.Read(make([]byte, 1))
-					Expect(err).To(MatchError("test done"))
+					Expect(err).To(MatchError("main done"))
 					close(done)
 				}()
 				runtime.Gosched()
 				Eventually(deadlineUnset).Should(BeClosed())
 				Consistently(done, scaleDuration(100*time.Millisecond)).ShouldNot(BeClosed())
 				// make the go routine return
-				str.closeForShutdown(errors.New("test done"))
+				str.closeForShutdown(errors.New("main done"))
 				Eventually(done).Should(BeClosed())
 			})
 		})
@@ -419,7 +419,7 @@ var _ = Describe("Receive Stream", func() {
 		})
 
 		Context("closing for shutdown", func() {
-			testErr := errors.New("test error")
+			testErr := errors.New("main error")
 
 			It("immediately returns all reads", func() {
 				done := make(chan struct{})

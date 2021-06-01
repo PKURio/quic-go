@@ -82,7 +82,7 @@ var _ = Describe("Send Queue", func() {
 		}()
 
 		// the run loop exits if there is a write error
-		testErr := errors.New("test error")
+		testErr := errors.New("main error")
 		c.EXPECT().Write(gomock.Any()).Return(testErr)
 		q.Send(getPacket([]byte("foobar")))
 		Eventually(done).Should(BeClosed())

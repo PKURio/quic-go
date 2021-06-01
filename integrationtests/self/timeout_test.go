@@ -159,11 +159,11 @@ var _ = Describe("Timeout tests", func() {
 
 		drop.Set(true)
 		time.Sleep(2 * idleTimeout)
-		_, err = strIn.Write([]byte("test"))
+		_, err = strIn.Write([]byte("main"))
 		checkTimeoutError(err)
 		_, err = strIn.Read([]byte{0})
 		checkTimeoutError(err)
-		_, err = strOut.Write([]byte("test"))
+		_, err = strOut.Write([]byte("main"))
 		checkTimeoutError(err)
 		_, err = strOut.Read([]byte{0})
 		checkTimeoutError(err)
