@@ -23,7 +23,7 @@ var (
 )
 
 var (
-	storagePath  = "../../data/"
+	Path = "../../data/"
 )
 
 // ReadFile 读取一个磁盘文件

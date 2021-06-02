@@ -86,9 +86,10 @@ func client() error {
 }
 
 // External interface to start client
-func ClientStart(conn net.PacketConn) error {
+func ClientStart(conn net.PacketConn, path string) error {
 	log.GetLogger().Println("ClientStart.")
 	node.Conn = conn
+	storage.Path = path
 	err := client()
 	return err
 }

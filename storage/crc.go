@@ -37,7 +37,7 @@ type Item struct {
 
 // GetCRCFilePath 获取一个crc文件的路径
 func GetCRCFilePath(fid string) string {
-	p := storagePath + fid + CRCFileExtension
+	p := Path + fid + CRCFileExtension
 	fmt.Println("warning: ",p)
 	return p
 }
@@ -96,15 +96,15 @@ func Checksum(data []byte) uint32 {
 }
 
 func CreateStoragePath() {
-	storagePath = "./data"
-	if storagePath == "" {
+	Path = "./data"
+	if Path == "" {
 		fmt.Println("no storage path provided")
 	}
-	if storagePath[len(storagePath)-1:] != string(filepath.Separator) {
-		storagePath += string(filepath.Separator)
+	if Path[len(Path)-1:] != string(filepath.Separator) {
+		Path += string(filepath.Separator)
 	}
-	err := os.MkdirAll(path.Dir(storagePath), 0755)
+	err := os.MkdirAll(path.Dir(Path), 0755)
 	if err != nil {
-		fmt.Println("failed to create storage path ", storagePath)
+		fmt.Println("failed to create storage path ", Path)
 	}
 }
