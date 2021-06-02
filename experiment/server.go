@@ -98,19 +98,19 @@ func generateTLSConfig() *tls.Config {
 	}
 }
 
-func main() {
+//func main() {
 	//go func() {
 	//	http.ListenAndServe("0.0.0.0:8080", nil)
 	//}()
 
-	node.Conn = &net.UDPConn{}
-	loadData()
-
-	err := server()
-	if err != nil {
-		fmt.Println("err: ", err)
-	}
-}
+//	node.Conn = &net.UDPConn{}
+//	loadData()
+//
+//	err := server()
+//	if err != nil {
+//		fmt.Println("err: ", err)
+//	}
+//}
 
 func loadData() {
 	for i := 0; i < 6; i++ {

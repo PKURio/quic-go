@@ -93,15 +93,15 @@ func ClientStart(conn net.PacketConn) error {
 	return err
 }
 
-func main() {
-	node.Conn = &net.UDPConn{}
-
-	err := client()
-	if err != nil {
-		fmt.Println("err: ", err)
-	}
-
-}
+//func main() {
+//	node.Conn = &net.UDPConn{}
+//
+//	err := client()
+//	if err != nil {
+//		fmt.Println("err: ", err)
+//	}
+//
+//}
 
 func loadCRC() (crc *storage.Item) {
 	crc, err := storage.LoadCRCFromFile(targetFID)
