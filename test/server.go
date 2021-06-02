@@ -21,15 +21,6 @@ import (
 	"strconv"
 )
 
-const (
-	addr           = "localhost:4242"
-	MaxQuicPktSize = 1370
-	SendPktSize    = 1052
-	RcvPktSize     = 40
-	message        = "abc\x00abcabcabcabcabcabc\x00abc"
-	targetFID      = "00000001f5413a6c6142fa779ab00ec51c4c7726"
-)
-
 var (
 	data [6][]byte
 )
@@ -48,8 +39,8 @@ func server() error {
 		// process
 		go func() {
 			stream, _ := sess.AcceptStream(context.Background())
-			rcvBuf := make([]byte, RcvPktSize)
-			sendBuf := make([]byte, SendPktSize)
+			rcvBuf := make([]byte, ServerRcvPktSize)
+			sendBuf := make([]byte, ServerSendPktSize)
 			for {
 				nLen, err := io.ReadFull(stream, rcvBuf)
 				if err != nil {
@@ -106,7 +97,6 @@ func generateTLSConfig() *tls.Config {
 		NextProtos:   []string{"quic-echo-example"},
 	}
 }
-
 
 func main() {
 	//go func() {

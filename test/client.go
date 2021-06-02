@@ -14,12 +14,14 @@ import (
 )
 
 const (
-	addr           = "localhost:4242"
-	message        = "foo\x00bar"
-	MaxQuicPktSize = 1370
-	SendPktSize    = 40
-	RcvPktSize     = 1052
-	targetFID      = "00000001f5413a6c6142fa779ab00ec51c4c7726"
+	addr              = "localhost:4242"
+	message           = "foo\x00bar"
+	MaxQuicPktSize    = 1370
+	ClientSendPktSize = 40
+	ClientRcvPktSize  = 1052
+	ServerSendPktSize = 1052
+	ServerRcvPktSize  = 40
+	targetFID         = "00000001f5413a6c6142fa779ab00ec51c4c7726"
 )
 
 var (
@@ -45,7 +47,7 @@ func client() error {
 	contentRcvNum := 0
 	go func(contentBuf []byte, contentRcvNum *int) {
 		for {
-			rcvBuf := make([]byte, RcvPktSize)
+			rcvBuf := make([]byte, ClientRcvPktSize)
 			nLen, err := io.ReadFull(stream, rcvBuf)
 			if err != nil {
 				fmt.Println("Client receive error: ", err)
@@ -62,7 +64,7 @@ func client() error {
 		for j := 0; j < 8; j++ {
 			PktIdx[j] = int16(i + j)
 		}
-		sendBuf := make([]byte, RcvPktSize)
+		sendBuf := make([]byte, ClientSendPktSize)
 		sendBuf = utils.C2SMarshal(targetFID, 0, PktIdx[:])
 
 		fmt.Printf("id:%d Client write size: %d\n", i/8, len(sendBuf))
