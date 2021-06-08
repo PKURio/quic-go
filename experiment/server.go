@@ -111,7 +111,6 @@ func generateTLSConfig() *tls.Config {
 //}
 
 func loadData() {
-	fmt.Println("load data")
 	for i := 0; i < 6; i++ {
 		data[i], _ = storage.ReadFile(storage.Path + targetFID + "_" + strconv.Itoa(i) + storage.DataFileExtension)
 		fmt.Printf("data[%d] size: %d\n", i, len(data[i]))
