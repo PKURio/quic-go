@@ -1,4 +1,4 @@
-package experiment
+package main
 
 import (
 	"context"
@@ -19,6 +19,17 @@ import (
 	"net"
 	_ "net/http/pprof"
 	"strconv"
+)
+
+const (
+	addr              = "localhost:4242"
+	message           = "foo\x00bar"
+	MaxQuicPktSize    = 1370
+	ClientSendPktSize = 40
+	ClientRcvPktSize  = 1052
+	ServerSendPktSize = 1052
+	ServerRcvPktSize  = 40
+	targetFID         = "00000001f5413a6c6142fa779ab00ec51c4c7726"
 )
 
 var (
@@ -69,7 +80,6 @@ func server() error {
 // External interface to start server
 func ServerStart(conn net.PacketConn, path string) error {
 	log.GetLogger().Println("ServerStart.")
-	loadData()
 	node.Conn = conn
 	storage.Path = path
 	err := server()
@@ -100,19 +110,19 @@ func generateTLSConfig() *tls.Config {
 	}
 }
 
-//func main() {
-//	node.Conn = &net.UDPConn{}
-//	loadData()
-//
-//	err := server()
-//	if err != nil {
-//		fmt.Println("err: ", err)
-//	}
-//}
+func main() {
+	node.Conn = &net.UDPConn{}
+	loadData()
+
+	err := server()
+	if err != nil {
+		fmt.Println("err: ", err)
+	}
+}
 
 func loadData() {
 	for i := 0; i < 6; i++ {
-		data[i], _ = storage.ReadFile(storage.Path + targetFID + ":" + strconv.Itoa(i) + storage.DataFileExtension)
+		data[i], _ = storage.ReadFile("../../data/" + targetFID + "_" + strconv.Itoa(i) + storage.DataFileExtension)
 		fmt.Printf("data[%d] size: %d\n", i, len(data[i]))
 	}
 }
