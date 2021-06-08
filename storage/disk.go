@@ -28,6 +28,9 @@ var (
 
 // ReadFile 读取一个磁盘文件
 func ReadFile(path string) ([]byte, error) {
+
+	print("path: ", path)
+
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, ErrorOpenDataFile
