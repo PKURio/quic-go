@@ -6,6 +6,7 @@ package storage
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"strconv"
@@ -28,6 +29,7 @@ var (
 
 // ReadFile 读取一个磁盘文件
 func ReadFile(path string) ([]byte, error) {
+	fmt.Println("path: ", path)
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, ErrorOpenDataFile
