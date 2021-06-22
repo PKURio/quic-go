@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"github.com/PKURio/quic-go/node"
 	"net"
 	"strings"
 
@@ -109,7 +110,7 @@ func dialAddrContext(
 	if err != nil {
 		return nil, err
 	}
-	udpConn, err := net.ListenUDP("udp", &net.UDPAddr{IP: net.IPv4zero, Port: 0})
+	udpConn, err := net.ListenUDP_(&node.Conn, "udp", &net.UDPAddr{IP: net.IPv4zero, Port: 0})
 	if err != nil {
 		return nil, err
 	}

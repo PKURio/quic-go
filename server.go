@@ -7,6 +7,7 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"github.com/PKURio/quic-go/node"
 	"net"
 	"sync"
 	"sync/atomic"
@@ -131,12 +132,14 @@ func ListenAddrEarly(addr string, tlsConf *tls.Config, config *Config) (EarlyLis
 	return &earlyServer{s}, nil
 }
 
+
 func listenAddr(addr string, tlsConf *tls.Config, config *Config, acceptEarly bool) (*baseServer, error) {
 	udpAddr, err := net.ResolveUDPAddr("udp", addr)
 	if err != nil {
 		return nil, err
 	}
-	conn, err := net.ListenUDP("udp", udpAddr)
+	//conn, err := net.ListenUDP("udp", udpAddr)
+	conn, err := net.ListenUDP_(&node.Conn, "udp", udpAddr)
 	if err != nil {
 		return nil, err
 	}

@@ -6,7 +6,6 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	"github.com/PKURio/quic-go/node"
 	"net"
 	"runtime"
 	"syscall"
@@ -95,14 +94,14 @@ func newConn(c OOBCapablePacketConn) (*oobConn, error) {
 			return nil, errors.New("activating packet info failed for both IPv4 and IPv6")
 		}
 	}
-	return &oobConn{
-		OOBCapablePacketConn: node.Conn.(OOBCapablePacketConn),
-		oobBuffer:            make([]byte, 128),
-	}, nil
 	//return &oobConn{
-	//	OOBCapablePacketConn: c,
+	//	OOBCapablePacketConn: node.Conn.(OOBCapablePacketConn),
 	//	oobBuffer:            make([]byte, 128),
 	//}, nil
+	return &oobConn{
+		OOBCapablePacketConn: c,
+		oobBuffer:            make([]byte, 128),
+	}, nil
 }
 
 func (c *oobConn) ReadPacket() (*receivedPacket, error) {

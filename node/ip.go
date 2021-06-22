@@ -24,7 +24,7 @@ var (
 	LocalPort  int
 	RemoteIP   string
 	RemotePort int
-	Conn       net.PacketConn
+	Conn       net.UDPConn
 )
 
 // discoverLocalIP 通过查询全部DNS服务器，获取和更新本 Node 的IP地址
