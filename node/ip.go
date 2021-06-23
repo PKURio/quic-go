@@ -5,6 +5,7 @@ package node
 */
 
 import (
+	"code.byted.org/videoarch/pcdn_lab_node/pkg/drop"
 	"errors"
 	"github.com/PKURio/quic-go/log"
 	"net"
@@ -24,7 +25,7 @@ var (
 	LocalPort  int
 	RemoteIP   string
 	RemotePort int
-	Conn       net.UDPConn
+	Conn       *drop.UDPConn
 )
 
 // discoverLocalIP 通过查询全部DNS服务器，获取和更新本 Node 的IP地址

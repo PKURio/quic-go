@@ -1,11 +1,11 @@
 package quic
 
 import (
+	"code.byted.org/videoarch/pcdn_lab_node/pkg/drop"
 	"context"
 	"crypto/tls"
 	"errors"
 	"fmt"
-	"github.com/PKURio/quic-go/node"
 	"net"
 	"strings"
 
@@ -110,11 +110,12 @@ func dialAddrContext(
 	if err != nil {
 		return nil, err
 	}
-	udpConn, err := net.ListenUDP_(&node.Conn, "udp", &net.UDPAddr{IP: net.IPv4zero, Port: 0})
+	conn, err := net.ListenUDP("udp", &net.UDPAddr{IP: net.IPv4zero, Port: 0})
+	//node.Conn = &drop.UDPConn{conn}
 	if err != nil {
 		return nil, err
 	}
-	return dialContext(ctx, udpConn, udpAddr, addr, tlsConf, config, use0RTT, true)
+	return dialContext(ctx, &drop.UDPConn{conn}, udpAddr, addr, tlsConf, config, use0RTT, true)
 }
 
 // Dial establishes a new QUIC connection to a server using a net.PacketConn. If

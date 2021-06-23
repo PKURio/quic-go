@@ -2,12 +2,12 @@ package quic
 
 import (
 	"bytes"
+	"code.byted.org/videoarch/pcdn_lab_node/pkg/drop"
 	"context"
 	"crypto/rand"
 	"crypto/tls"
 	"errors"
 	"fmt"
-	"github.com/PKURio/quic-go/node"
 	"net"
 	"sync"
 	"sync/atomic"
@@ -132,18 +132,19 @@ func ListenAddrEarly(addr string, tlsConf *tls.Config, config *Config) (EarlyLis
 	return &earlyServer{s}, nil
 }
 
-
 func listenAddr(addr string, tlsConf *tls.Config, config *Config, acceptEarly bool) (*baseServer, error) {
 	udpAddr, err := net.ResolveUDPAddr("udp", addr)
 	if err != nil {
 		return nil, err
 	}
-	//conn, err := net.ListenUDP("udp", udpAddr)
-	conn, err := net.ListenUDP_(&node.Conn, "udp", udpAddr)
+
+	conn, err := net.ListenUDP("udp", udpAddr)
+	//node.Conn = &drop.UDPConn{conn}
+	//conn, err := net.ListenUDP_(node.Conn.Conn, "udp", udpAddr)
 	if err != nil {
 		return nil, err
 	}
-	serv, err := listen(conn, tlsConf, config, acceptEarly)
+	serv, err := listen(&drop.UDPConn{conn}, tlsConf, config, acceptEarly)
 	if err != nil {
 		return nil, err
 	}

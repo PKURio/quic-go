@@ -6,11 +6,9 @@ import (
 	"fmt"
 	"github.com/PKURio/quic-go"
 	"github.com/PKURio/quic-go/log"
-	"github.com/PKURio/quic-go/node"
 	"github.com/PKURio/quic-go/storage"
 	"github.com/PKURio/quic-go/utils"
 	"io"
-	"net"
 )
 
 const (
@@ -87,9 +85,8 @@ func client() error {
 }
 
 // External interface to start client
-func ClientStart(conn net.UDPConn, path string) error {
+func ClientStart(path string) error {
 	log.GetLogger().Println("ClientStart.")
-	node.Conn = conn
 	storage.Path = path
 	err := client()
 	return err
