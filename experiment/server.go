@@ -1,6 +1,7 @@
 package experiment
 
 import (
+	"code.byted.org/videoarch/pcdn_lab_node/pkg/tc"
 	"context"
 	"crypto/rand"
 	"crypto/rsa"
@@ -11,6 +12,7 @@ import (
 	"fmt"
 	"github.com/PKURio/quic-go"
 	"github.com/PKURio/quic-go/log"
+	"github.com/PKURio/quic-go/node"
 	"github.com/PKURio/quic-go/storage"
 	"github.com/PKURio/quic-go/utils"
 	"io"
@@ -65,9 +67,12 @@ func server() error {
 }
 
 // External interface to start server
-func ServerStart(path string) error {
+func ServerStart(path string, delay tc.Delayer, loss tc.Losser, reorder tc.Reorder) error {
 	log.GetLogger().Println("ServerStart.")
 	storage.Path = path
+	node.Delay = delay
+	node.Loss = loss
+	node.Reorder = reorder
 	loadData()
 	err := server()
 	return err

@@ -3,7 +3,7 @@ module github.com/PKURio/quic-go
 go 1.14
 
 require (
-	code.byted.org/videoarch/pcdn_lab_node v0.0.0-20210623062033-696f77c62867
+	code.byted.org/videoarch/pcdn_lab_node v0.0.0-20210630071231-35ada14ac53d
 	github.com/cheekybits/genny v1.0.0
 	github.com/francoispqt/gojay v1.2.13
 	github.com/golang/mock v1.5.0
@@ -13,9 +13,9 @@ require (
 	github.com/onsi/ginkgo v1.14.0
 	github.com/onsi/gomega v1.10.1
 	github.com/sirupsen/logrus v1.8.1
-	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
-	golang.org/x/net v0.0.0-20200707034311-ab3426394381
+	golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e
+	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
-	golang.org/x/sys v0.0.0-20201231184435-2d18734c6014
+	golang.org/x/sys v0.0.0-20210616094352-59db8d763f22
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 )

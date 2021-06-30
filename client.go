@@ -1,11 +1,12 @@
 package quic
 
 import (
-	"code.byted.org/videoarch/pcdn_lab_node/pkg/drop"
+	"code.byted.org/videoarch/pcdn_lab_node/pkg/tc"
 	"context"
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"github.com/PKURio/quic-go/node"
 	"net"
 	"strings"
 
@@ -115,7 +116,8 @@ func dialAddrContext(
 	if err != nil {
 		return nil, err
 	}
-	return dialContext(ctx, &drop.UDPConn{conn}, udpAddr, addr, tlsConf, config, use0RTT, true)
+	tcConn := tc.NewTCConn(conn, node.Delay, node.Loss, node.Reorder)
+	return dialContext(ctx, tcConn, udpAddr, addr, tlsConf, config, use0RTT, true)
 }
 
 // Dial establishes a new QUIC connection to a server using a net.PacketConn. If

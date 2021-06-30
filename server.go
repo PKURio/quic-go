@@ -2,12 +2,13 @@ package quic
 
 import (
 	"bytes"
-	"code.byted.org/videoarch/pcdn_lab_node/pkg/drop"
+	"code.byted.org/videoarch/pcdn_lab_node/pkg/tc"
 	"context"
 	"crypto/rand"
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"github.com/PKURio/quic-go/node"
 	"net"
 	"sync"
 	"sync/atomic"
@@ -77,11 +78,11 @@ type baseServer struct {
 	newSession func(
 		sendConn,
 		sessionRunner,
-		protocol.ConnectionID, /* original dest connection ID */
+		protocol.ConnectionID,  /* original dest connection ID */
 		*protocol.ConnectionID, /* retry src connection ID */
-		protocol.ConnectionID, /* client dest connection ID */
-		protocol.ConnectionID, /* destination connection ID */
-		protocol.ConnectionID, /* source connection ID */
+		protocol.ConnectionID,  /* client dest connection ID */
+		protocol.ConnectionID,  /* destination connection ID */
+		protocol.ConnectionID,  /* source connection ID */
 		protocol.StatelessResetToken,
 		*Config,
 		*tls.Config,
@@ -144,7 +145,8 @@ func listenAddr(addr string, tlsConf *tls.Config, config *Config, acceptEarly bo
 	if err != nil {
 		return nil, err
 	}
-	serv, err := listen(&drop.UDPConn{conn}, tlsConf, config, acceptEarly)
+	tcConn := tc.NewTCConn(conn, node.Delay, node.Loss, node.Reorder)
+	serv, err := listen(tcConn, tlsConf, config, acceptEarly)
 	if err != nil {
 		return nil, err
 	}
