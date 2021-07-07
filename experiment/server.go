@@ -46,7 +46,7 @@ func server() error {
 				if err != nil {
 					fmt.Println("Server receive error: ", err)
 				}
-				fmt.Printf("Server receive %d content %s\n", nLen, rcvBuf)
+				fmt.Printf("Server receive %d bytes", nLen)
 				content := utils.C2SUnmarshal(rcvBuf)
 				fmt.Println("FID", hex.EncodeToString(content.FID[:]), "FileIdx", content.FileIdx, "PktIdx", content.PktIdx)
 
